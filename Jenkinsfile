@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = "java-counter-app"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,15 +12,9 @@ pipeline {
             }
         }
 
-        stage('Build with Maven') {
+        stage('Build Docker Image (Maven inside Docker)') {
             steps {
-                sh 'mvn clean package'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t java-counter-app:latest .'
+                sh 'docker build -t $IMAGE_NAME:latest .'
             }
         }
 
@@ -25,9 +23,21 @@ pipeline {
                 sh '''
                   docker stop java-counter || true
                   docker rm java-counter || true
-                  docker run -d --name java-counter -p 8080:8080 java-counter-app:latest
+                  docker run -d --name java-counter -p 8080:8080 $IMAGE_NAME:latest
                 '''
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
+        always {
+            cleanWs()
         }
     }
 }
