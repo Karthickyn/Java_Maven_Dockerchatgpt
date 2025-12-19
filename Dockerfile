@@ -19,7 +19,7 @@ FROM tomcat:10.1-jdk17
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy WAR from build stage
-COPY --from=build /app/target/counter.war /usr/local/tomcat/webapps/counter.war
+COPY --from=build /app/target/counter.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
 
