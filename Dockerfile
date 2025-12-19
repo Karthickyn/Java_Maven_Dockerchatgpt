@@ -8,6 +8,8 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 
+RUN echo "force war rebuild"
+
 RUN mvn clean package
 
 # =========================
