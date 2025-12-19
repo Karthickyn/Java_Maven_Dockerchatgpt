@@ -1,8 +1,5 @@
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          version="5.0">
-   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-   </welcome-file-list>
 
     <servlet>
         <servlet-name>CounterServlet</servlet-name>
@@ -13,5 +10,10 @@
         <servlet-name>CounterServlet</servlet-name>
         <url-pattern>/counter</url-pattern>
     </servlet-mapping>
+
+    <!-- ADD THIS -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 
 </web-app>
