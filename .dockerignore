@@ -1,4 +1,5 @@
 target
 .git
 .gitignore
+src
 README.md
