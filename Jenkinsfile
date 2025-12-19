@@ -17,15 +17,16 @@ pipeline {
                 sh 'docker build -t $IMAGE_NAME:latest .'
             }
         }
+          stage('Deploy Container') {
+    steps {
+        sh '''
+          docker stop java-counter || true
+          docker rm java-counter || true
+          docker run -d --name java-counter -p 9090:8080 java-counter-app:latest
+        '''
+    }
+}
 
-        stage('Deploy Container') {
-            steps {
-                sh '''
-                  docker stop java-counter || true
-                  docker rm java-counter || true
-                  docker run -d --name java-counter -p 8080:8080 $IMAGE_NAME:latest
-                '''
-            }
         }
     }
 
